@@ -10,7 +10,7 @@ Vagrant.configure(VAGRAN_API_VERSION ) do | config |
     v.ssh.username = 'root'
     v.ssh.private_key_path = 'phusion.key'
     
-    v.vm.provision 'shell', inline: 'echo Hello'
+    v.vm.provision 'shell', inline: '/usr/bin/apt-get update; /usr/bin/apt-get -y install chef'
 #    v.vm.synched_folder './keys', '/vagrant'
   end
 end
