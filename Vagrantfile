@@ -4,14 +4,13 @@ Vagrant.configure(VAGRAN_API_VERSION ) do | config |
   config.vm.define 'lb' do |v|
     v.vm.provider 'docker' do |d|
       d.cmd       = ['/sbin/my_init', '--enable-insecure-key']
-      d.image     = 'phusion/baseimage'
+      d.image     = 'bamdad/chef'
       d.has_ssh   = true
     end
     v.ssh.username = 'root'
     v.ssh.private_key_path = 'phusion.key'
-    
-    v.vm.provision 'shell', inline: '/usr/bin/apt-get update; /usr/bin/apt-get -y install chef'
-#    v.vm.synched_folder './keys', '/vagrant'
+    v.vm.synced_folder './chef', '/chef'
+    v.vm.provision 'shell', inline: 'chef-solo -c /chef/solo.rb'
   end
 end
 
